@@ -54,9 +54,9 @@
   - join
   - search
 
-### 2-3 생성된 adoc 문서 통합
+### 2-3 생성된 adoc 스니펫 통합하여 문서 생성
 
 - docs.asciidoc
-  - userDocs.adoc
+  - index.adoc
   - adoc 문법링크
 
