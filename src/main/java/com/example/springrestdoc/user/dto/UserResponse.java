@@ -1,45 +1,40 @@
 package com.example.springrestdoc.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import com.example.springrestdoc.user.domain.UserInfo;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class UserResponse {
 
-public class UserResponse extends UserInfo {
+    private Long id;
 
     private String loginId;
-    private String pwd;
 
     private String email;
 
-    private String phoneNumber;
-
     private String statusMsg;
 
-    @Override
+    private String phoneNumber;
+
+    public UserResponse(Long id,String loginId, String email, String phoneNumber, String statusMsg) {
+        this.id = id;
+        this.loginId = loginId;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.statusMsg = statusMsg;
+    }
+
     public String getLoginId() {
         return loginId;
     }
 
-    @Override
     public void setLoginId(String loginId) {
         this.loginId = loginId;
     }
 
-    @Override
-    public String getPwd() {
-        return pwd;
-    }
-
-    @Override
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    @Override
     public String getEmail() {
         return email;
     }
 
-    @Override
     public void setEmail(String email) {
         this.email = email;
     }
@@ -48,15 +43,15 @@ public class UserResponse extends UserInfo {
         return statusMsg;
     }
 
-
     public void setStatusMsg(String statusMsg) {
         this.statusMsg = statusMsg;
     }
 
-    public void toResponse(UserInfo user) {
-        this.loginId = user.getLoginId();
-        this.pwd = user.getPwd();
-        this.email = user.getEmail();
-        this.phoneNumber = user.getPhoneNumber();
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

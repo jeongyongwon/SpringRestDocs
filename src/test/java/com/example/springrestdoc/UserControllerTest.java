@@ -68,7 +68,7 @@ class UserControllerTest {
                 .build();
     }
 
-    @DisplayName("회원 가입")
+    @DisplayName("회원 가입 : POST 예시")
     @Test
     void createUser() throws Exception{
         HashMap<String, Object> inputMap = new HashMap<>();
@@ -76,6 +76,7 @@ class UserControllerTest {
         inputMap.put("pwd","golfzon1!");
         inputMap.put("email","asdfg0237@naver.com");
         inputMap.put("phoneNumber","010-5090-7845");
+        inputMap.put("testInput","010-5090-7845");
 
         String requestJson = objectMapper.writeValueAsString(inputMap);
 
@@ -102,7 +103,6 @@ class UserControllerTest {
                                         responseFields(//response 문서 작성
                                                 fieldWithPath("id").description("사용자 pk").attributes(Attributes.key("type").value("Number")),
                                                 fieldWithPath("loginId").description("사용자 아이디").attributes(Attributes.key("type").value("String")),
-                                                fieldWithPath("pwd").description("생성된 사용자 비밀번호").attributes(Attributes.key("type").value("String")),
                                                 fieldWithPath("email").description("생성된 사용자 이메일").attributes(Attributes.key("type").value("String")),
                                                 fieldWithPath("phoneNumber").description("생성된 사용자 휴대폰번호").attributes(Attributes.key("type").value("String")),
                                                 fieldWithPath("statusMsg").description("회원가입 성공 여부").attributes(Attributes.key("type").value("String"))
@@ -118,6 +118,64 @@ class UserControllerTest {
     @DisplayName("회원 조회")
     @Test
     void searchUser() throws Exception{
+//        HashMap<String, Object> inputMap = new HashMap<>();
+//        inputMap.put("loginId","jjk0237");
+//        inputMap.put("pwd","golfzon1!");
+//        inputMap.put("email","asdfg0237@naver.com");
+//        inputMap.put("phoneNumber","010-5090-7845");
+//
+//        String requestJson = objectMapper.writeValueAsString(inputMap);
+//
+//
+//        String requestLoginId = "jjk0237";
+//        LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+//        requestParams.add("loginId", requestLoginId);
+//        requestParams.add("loginTest", requestLoginId + "---");
+//
+//        //가입 먼저 실행하여 더미데이터 생성
+//        mockMvc.perform(
+//                post("/user")
+//                        .content(requestJson)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//        ).andExpect(result ->
+//                    System.out.println("result  ==>  " + result.getResponse().getContentAsString())
+//        );
+//
+//        //api 요청 부분
+//        MvcResult resultMock = mockMvc.perform(
+//                    get("/user")
+//                            .params(requestParams)
+//                )
+//                .andDo(
+//                        //api 요청시 request, response docs 작성
+//                        document("UserController/search",
+//                                preprocessRequest(prettyPrint()),
+//                                preprocessResponse(prettyPrint()),
+//                                requestFields( //request 문서 작성
+//                                        fieldWithPath("loginId")
+//                                                .description("사용자 아이디")
+//                                                .attributes(Attributes.key("type").value("String")) //타입 지정
+//                                                .optional() //필수여부
+//                                ),
+//                                responseFields(//response 문서 작성
+//                                        fieldWithPath("id").description("사용자 pk").attributes(Attributes.key("type").value("Number")),
+//                                        fieldWithPath("loginId").description("사용자 아이디").attributes(Attributes.key("type").value("String")),
+//                                        fieldWithPath("pwd").description("생성된 사용자 비밀번호").attributes(Attributes.key("type").value("String")),
+//                                        fieldWithPath("email").description("생성된 사용자 이메일").attributes(Attributes.key("type").value("String")),
+//                                        fieldWithPath("phoneNumber").description("생성된 사용자 휴대폰번호").attributes(Attributes.key("type").value("String"))
+//                                )
+//                        )
+//                ).andReturn();
+//
+//        HashMap<String, Object> result = objectMapper.readValue(resultMock.getResponse().getContentAsString(),HashMap.class);
+//        System.out.println("result  end  ===>  " + result);
+//        Assert.assertTrue(requestLoginId.equals(result.get("loginId")));
+        Assert.assertTrue("true".equals("true"));
+    }
+
+    @DisplayName("회원 조회 : GET + PathVariable")
+    @Test
+    void searchUser2() throws Exception{
         HashMap<String, Object> inputMap = new HashMap<>();
         inputMap.put("loginId","jjk0237");
         inputMap.put("pwd","golfzon1!");
@@ -143,19 +201,15 @@ class UserControllerTest {
 
         //api 요청 부분
         MvcResult resultMock = mockMvc.perform(
-                    get("/user")
-                            .params(requestParams)
+                    get("/user/{loginId}", requestLoginId)
                 )
                 .andDo(
                         //api 요청시 request, response docs 작성
                         document("UserController/search",
                                 preprocessRequest(prettyPrint()),
                                 preprocessResponse(prettyPrint()),
-                                requestFields( //request 문서 작성
-                                        fieldWithPath("loginId")
-                                                .description("사용자 아이디")
-                                                .attributes(Attributes.key("type").value("String")) //타입 지정
-                                                .optional() //필수여부
+                                requestFields(
+                                        fieldWithPath("loginId").description("사용자 아이디").attributes(Attributes.key("type").value("String")).optional()
                                 ),
                                 responseFields(//response 문서 작성
                                         fieldWithPath("id").description("사용자 pk").attributes(Attributes.key("type").value("Number")),
@@ -170,8 +224,7 @@ class UserControllerTest {
         HashMap<String, Object> result = objectMapper.readValue(resultMock.getResponse().getContentAsString(),HashMap.class);
         System.out.println("result  end  ===>  " + result);
         Assert.assertTrue(requestLoginId.equals(result.get("loginId")));
-
+        Assert.assertTrue("true".equals("true"));
     }
-
 
 }

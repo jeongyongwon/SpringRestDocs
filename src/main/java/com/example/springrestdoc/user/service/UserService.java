@@ -19,26 +19,30 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserInfo searchUser(String loginId) {
-        System.out.println("loginId = " + loginId);
-        return userRepository.findByLoginId(loginId);
-    }
+    public UserResponse searchUser(String loginId) {
+        UserResponse userResponse;
 
-    public UserInfo createUser(UserRequest userRequest) {
-        UserInfo user;
-        UserResponse userResponse = new UserResponse();
         try {
-            user = userRequest.toEntity();
-            System.out.println("user 1= " + user.getLoginId());
-            System.out.println("user 2= " + user.getPwd());
-            userRepository.save(user);
-            userResponse.toResponse(user);
-            userResponse.setStatusMsg("success");
-        } catch (Exception e) {
-            userResponse.setStatusMsg("fail");
+            UserInfo user = userRepository.findByLoginId(loginId);
+            userResponse = new UserResponse(user.getId(),user.getLoginId(), user.getEmail(), user.getPhoneNumber(),"success");
+        } catch (NullPointerException e) {
+            userResponse = new UserResponse(null,null, null, null,"fail");
         }
 
+        return userResponse;
 
+    }
+
+    public UserResponse createUser(UserRequest userRequest) {
+        UserInfo user;
+        UserResponse userResponse;
+        try {
+            user = userRequest.toEntity();
+            userRepository.save(user);
+            userResponse = new UserResponse(user.getId(),user.getLoginId(), user.getEmail(), user.getPhoneNumber(),"success");
+        } catch (Exception e) {
+            userResponse = new UserResponse(null,null, null, null,"fail");
+        }
 
         return userResponse;
     }
