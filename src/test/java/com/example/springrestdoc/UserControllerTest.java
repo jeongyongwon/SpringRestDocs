@@ -68,7 +68,7 @@ class UserControllerTest {
     @Test
     void searchUser() throws Exception{
         UserRequest userRequest = new UserRequest();
-        userRequest.setLoginId("jjk0237");
+        userRequest.setLoginId("asdfg0237");
 
         String requestJson = objectMapper.writeValueAsString(userRequest);
 
