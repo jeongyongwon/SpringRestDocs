@@ -1,7 +1,9 @@
 package com.example.springrestdoc.user.dto;
 
 import com.example.springrestdoc.user.domain.UserInfo;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserRequest {
 
     private String loginId;

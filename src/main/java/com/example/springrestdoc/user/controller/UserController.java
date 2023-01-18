@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 public class UserController {
 
@@ -17,13 +19,10 @@ public class UserController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/user/{loginId}", method = RequestMethod.GET ,produces = "application/json; charset=UTF8")
+    @RequestMapping(value = "/user", method = RequestMethod.GET ,produces = "application/json; charset=UTF8")
     @ResponseBody
-    public ResponseEntity<UserResponse> search2(@PathVariable String loginId
-            , @RequestParam String pcStatus
-            , @RequestParam String mobileStatus) {
-        System.out.println("loginId = " + loginId + ", pcStatus = " + pcStatus + ", mobileStatus = " + mobileStatus);
-        UserResponse user = userService.searchUser(loginId);
+    public ResponseEntity<UserResponse> search2(@RequestParam HashMap<String, String> param) {
+        UserResponse user = userService.searchUser(String.valueOf(param.get("loginId")));
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
