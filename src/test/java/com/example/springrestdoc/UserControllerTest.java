@@ -83,7 +83,12 @@ class UserControllerTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(
-                        //api 요청시 request, response docs 작성
+                        /*
+                            api 요청시 request, response docs 작성
+                            build/generated-snippets 아래 경로로 문서
+                            src/docs/asciidoc/index.adoc에 스니펫 통합하여 문서 생성
+                            테스트 성공시에 문서 작성 완료
+                        */
                         document("UserController/join",
                                 preprocessRequest(prettyPrint()), //prettyPrint : request, response json 보기 좋게 보정
                                 preprocessResponse(prettyPrint()),
