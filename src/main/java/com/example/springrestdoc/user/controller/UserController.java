@@ -16,24 +16,21 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/user", produces = "application/json; charset=UTF8")
+
+    @RequestMapping(value = "/user/{loginId}", method = RequestMethod.GET ,produces = "application/json; charset=UTF8")
     @ResponseBody
-    public ResponseEntity<UserResponse> search(@RequestParam(value = "loginId") String loginId) {
+    public ResponseEntity<UserResponse> search2(@PathVariable String loginId
+            , @RequestParam String pcStatus
+            , @RequestParam String mobileStatus) {
+        System.out.println("loginId = " + loginId + ", pcStatus = " + pcStatus + ", mobileStatus = " + mobileStatus);
         UserResponse user = userService.searchUser(loginId);
-        return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @GetMapping(value = "/user/{loginId}", produces = "application/json; charset=UTF8")
-    @ResponseBody
-    public ResponseEntity<UserResponse> search2(@PathVariable(name = "loginId") String loginId) {
-        UserResponse user = userService.searchUser(loginId);
-        return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @PostMapping(value = "/user", produces = "application/json; charset=UTF8")
+    @RequestMapping(value = "/user", method = RequestMethod.POST, produces = "application/json; charset=UTF8")
     @ResponseBody
     public ResponseEntity<UserResponse> join(@RequestBody UserRequest userRequest) {
         UserResponse user = userService.createUser(userRequest);
-        return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

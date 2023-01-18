@@ -5,6 +5,7 @@ import com.example.springrestdoc.user.domain.UserInfo;
 public class UserRequest {
 
     private String loginId;
+
     private String pwd;
 
     private String email;

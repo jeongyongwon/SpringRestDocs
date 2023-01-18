@@ -8,6 +8,7 @@ import com.example.springrestdoc.user.jpa.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -22,11 +23,12 @@ public class UserService {
     public UserResponse searchUser(String loginId) {
         UserResponse userResponse;
 
-        try {
-            UserInfo user = userRepository.findByLoginId(loginId);
-            userResponse = new UserResponse(user.getId(),user.getLoginId(), user.getEmail(), user.getPhoneNumber(),"success");
-        } catch (NullPointerException e) {
-            userResponse = new UserResponse(null,null, null, null,"fail");
+        Optional<UserInfo> user = Optional.ofNullable(userRepository.findByLoginId(loginId));
+        if (user.isEmpty()) {
+            userResponse = new UserResponse(0L,"fail-id", "fail-Email", "fail-phoneNumber","fail");
+        } else {
+            UserInfo userData = user.get();
+            userResponse = new UserResponse(userData.getId(),userData.getLoginId(), userData.getEmail(), userData.getPhoneNumber(),"success");
         }
 
         return userResponse;
@@ -41,7 +43,7 @@ public class UserService {
             userRepository.save(user);
             userResponse = new UserResponse(user.getId(),user.getLoginId(), user.getEmail(), user.getPhoneNumber(),"success");
         } catch (Exception e) {
-            userResponse = new UserResponse(null,null, null, null,"fail");
+            userResponse = new UserResponse(0L,"fail-id", "fail-Email", "fail-phoneNumber","fail");
         }
 
         return userResponse;
