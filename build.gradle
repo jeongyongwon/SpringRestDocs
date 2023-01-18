@@ -15,18 +15,25 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'junit:junit'
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.12'
+    //JUnit4 추가
+    testImplementation("org.junit.vintage:junit-vintage-engine") {
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     /* Rest Docs */
     asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {
     outputs.dir snippetsDir
     useJUnitPlatform()
+    include "**/*Test.class"
 }
 
 ext {
