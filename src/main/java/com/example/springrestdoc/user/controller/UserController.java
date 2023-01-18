@@ -1,4 +1,4 @@
-package com.example.springrestdoc.user.controller.controller;
+package com.example.springrestdoc.user.controller;
 
 
 import com.example.springrestdoc.user.domain.UserInfo;
@@ -15,14 +15,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/users", produces = "application/json; charset=UTF8")
+    @GetMapping(value = "/user", produces = "application/json; charset=UTF8")
     @ResponseBody
-    public ResponseEntity<UserInfo> search(@RequestParam String loginId) {
+    public ResponseEntity<UserInfo> search(@RequestParam(value = "loginId") String loginId) {
         UserInfo user = userService.searchUser(loginId);
         return new ResponseEntity<>(user, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping(value = "/users", produces = "application/json; charset=UTF8")
+    @PostMapping(value = "/user", produces = "application/json; charset=UTF8")
     @ResponseBody
     public ResponseEntity<UserInfo> join(@RequestBody UserRequest userRequest) {
         System.out.println("userRequest 1 = " + userRequest.getLoginId());
