@@ -65,7 +65,7 @@ class UserControllerTest {
         inputMap.put("loginId","jjk0237");
         inputMap.put("pwd","golfzon1!");
         inputMap.put("email","asdfg0237@naver.com");
-        inputMap.put("phone","010-4111-7845");
+        inputMap.put("phoneNumber","010-5090-7845");
 
         String requestJson = objectMapper.writeValueAsString(inputMap);
 
@@ -85,12 +85,14 @@ class UserControllerTest {
                                                     .description("사용자 비밀번호"),
                                             PayloadDocumentation.fieldWithPath("email")
                                                     .description("사용자 이메일"),
-                                            PayloadDocumentation.fieldWithPath("phone")
+                                            PayloadDocumentation.fieldWithPath("phoneNumber")
                                                         .description("사용자 휴대폰 번호")
                                         ),
                                         PayloadDocumentation.responseFields(
+                                                PayloadDocumentation.fieldWithPath("id")
+                                                        .description("사용자 pk"),
                                                 PayloadDocumentation.fieldWithPath("loginId")
-                                                        .description("생성된 사용자 id"),
+                                                        .description("사용자 아이디"),
                                                 PayloadDocumentation.fieldWithPath("pwd")
                                                         .description("생성된 사용자 비밀번호"),
                                                 PayloadDocumentation.fieldWithPath("email")

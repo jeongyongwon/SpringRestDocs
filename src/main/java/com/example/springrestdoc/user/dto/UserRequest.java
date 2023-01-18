@@ -4,8 +4,6 @@ import com.example.springrestdoc.user.domain.UserInfo;
 
 public class UserRequest {
 
-    private Long id;
-
     private String loginId;
     private String pwd;
 
@@ -22,14 +20,6 @@ public class UserRequest {
         user.setPhoneNumber(getPhoneNumber());
 
         return user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getLoginId() {
