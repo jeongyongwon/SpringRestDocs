@@ -10,6 +10,8 @@ public class UserResponse extends UserInfo {
 
     private String email;
 
+    private String phoneNumber;
+
     private String statusMsg;
 
     @Override
@@ -55,6 +57,6 @@ public class UserResponse extends UserInfo {
         this.loginId = user.getLoginId();
         this.pwd = user.getPwd();
         this.email = user.getEmail();
-        this.email = user.getPhoneNumber();
+        this.phoneNumber = user.getPhoneNumber();
     }
 }
