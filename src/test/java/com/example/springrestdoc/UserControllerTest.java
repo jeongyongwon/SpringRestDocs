@@ -64,46 +64,6 @@ class UserControllerTest {
 
     }
 
-    @DisplayName("User Search : GET")
-    @Test
-    void searchUser() throws Exception{
-        UserRequest userRequest = new UserRequest();
-        userRequest.setLoginId("asdfg0237");
-
-        String requestJson = objectMapper.writeValueAsString(userRequest);
-
-        //api 요청 부분
-        MvcResult resultMock = mockMvc.perform(
-                    get("/user")
-                            .content(requestJson)
-                )
-                .andExpect(status().isOk())
-                .andDo(
-                        //api 요청시 request, response docs 작성
-                        document("UserController/search",
-                                preprocessRequest(prettyPrint()),
-                                preprocessResponse(prettyPrint()),
-                                requestFields(
-                                        fieldWithPath("loginId").description("사용자 아이디").attributes(Attributes.key("type").value("String"))
-                                ),
-                                responseFields(//response 문서 작성
-                                        fieldWithPath("id").description("사용자 pk").attributes(Attributes.key("type").value("Number")),
-                                        fieldWithPath("loginId").description("사용자 아이디").attributes(Attributes.key("type").value("String")),
-                                        fieldWithPath("email").description("생성된 사용자 이메일").attributes(Attributes.key("type").value("String")),
-                                        fieldWithPath("statusMsg").description("조회 성공 여부").attributes(Attributes.key("type").value("String")),
-                                        fieldWithPath("phoneNumber").description("생성된 사용자 휴대폰번호").attributes(Attributes.key("type").value("String"))
-
-                                )
-                        )
-                ).andReturn();
-
-        HashMap<String, Object> result = objectMapper.readValue(resultMock.getResponse().getContentAsString(),HashMap.class);
-        System.out.println("result  end  ===>  " + result);
-        Assert.assertTrue(
-                "success".equals(result.get("statusMsg")) || "fail".equals(result.get("statusMsg"))
-        );
-    }
-
     @DisplayName("User join : POST 예시")
     @Test
     void createUser() throws Exception{
@@ -151,6 +111,45 @@ class UserControllerTest {
         Assert.assertTrue("success".equals(result.get("statusMsg")));
     }
 
+
+    @DisplayName("User Search : GET")
+    @Test
+    void searchUser() throws Exception{
+        UserRequest userRequest = new UserRequest();
+        userRequest.setLoginId("asdfg0237");
+
+        String requestJson = objectMapper.writeValueAsString(userRequest);
+
+        //api 요청 부분
+        MvcResult resultMock = mockMvc.perform(
+                    get("/user")
+                            .content(requestJson)
+                )
+                .andExpect(status().isOk())
+                .andDo(
+                        document("UserController/search",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                requestFields(
+                                        fieldWithPath("loginId").description("사용자 아이디").attributes(Attributes.key("type").value("String"))
+                                ),
+                                responseFields(
+                                        fieldWithPath("id").description("사용자 pk").attributes(Attributes.key("type").value("Number")),
+                                        fieldWithPath("loginId").description("사용자 아이디").attributes(Attributes.key("type").value("String")),
+                                        fieldWithPath("email").description("생성된 사용자 이메일").attributes(Attributes.key("type").value("String")),
+                                        fieldWithPath("statusMsg").description("조회 성공 여부").attributes(Attributes.key("type").value("String")),
+                                        fieldWithPath("phoneNumber").description("생성된 사용자 휴대폰번호").attributes(Attributes.key("type").value("String"))
+
+                                )
+                        )
+                ).andReturn();
+
+        HashMap<String, Object> result = objectMapper.readValue(resultMock.getResponse().getContentAsString(),HashMap.class);
+        System.out.println("result  end  ===>  " + result);
+        Assert.assertTrue(
+                "success".equals(result.get("statusMsg")) || "fail".equals(result.get("statusMsg"))
+        );
+    }
 
 
 }

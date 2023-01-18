@@ -5,7 +5,7 @@
 :toc: left
 :toclevels: 3
 
-== 회원가입하기
+== 회원 가입하기
 
 === Request
 
@@ -14,3 +14,13 @@ include::{snippets}/UserController/join/http-request.adoc[]
 === Response
 
 include::{snippets}/UserController/join/http-response.adoc[]
+
+== 회원 조회하기
+
+=== Request
+
+include::{snippets}/UserController/search/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/UserController/search/http-response.adoc[]
